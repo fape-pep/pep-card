@@ -11,15 +11,23 @@
   "dependencies": {
     "@react-router/node": "^7.9.2",
     "@react-router/serve": "^7.9.2",
+    "@react-three/drei": "^10.7.6",
+    "@react-three/fiber": "^9.3.0",
     "isbot": "^5.1.31",
+    "primeicons": "^7.0.0",
+    "primereact": "^10.9.7",
+    "qrcode": "^1.5.4",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router": "^7.9.2"
+    "react-router": "^7.9.2",
+    "three": "^0.180.0",
+    "vcard-creator": "^0.7.2"
   },
   "devDependencies": {
     "@react-router/dev": "^7.9.2",
     "@tailwindcss/vite": "^4.1.13",
     "@types/node": "^22",
+    "@types/qrcode": "^1.5.5",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
     "tailwindcss": "^4.1.13",
