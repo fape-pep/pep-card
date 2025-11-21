@@ -7,16 +7,16 @@ export function useUiActions() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [modalVisible, setModalVisible] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = (values: Record<string, string>) => {
+    const params = new URLSearchParams(searchParams);
+    Object.entries(values).forEach(([key, value]) => {
+      params.set(key, value ?? '');
+    });
+    setSearchParams(params, { replace: true });
     setModalVisible(false);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set(name, e.target.value);
-    setSearchParams(params);
-  };
+  // Per-keystroke URL updates removed to avoid caret jump
 
   const copyToClipboard = async () => {
     try {
@@ -35,7 +35,6 @@ export function useUiActions() {
     modalVisible,
     setModalVisible,
     handleSubmit,
-    handleChange,
     copyToClipboard,
     handleInfoClick,
   };

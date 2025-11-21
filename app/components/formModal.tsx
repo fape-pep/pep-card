@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Sidebar} from "primereact/sidebar";
 import {Button} from "primereact/button";
 import {InputText} from "primereact/inputtext";
@@ -9,16 +9,31 @@ interface FormModalProps {
   formFields: FormFieldConfig[],
   visible: boolean;
   onHide: () => void;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>, name: string) => void;
+  onSubmit: (values: Record<string, string>) => void;
 }
 
-export function FormModal({formFields, visible, onHide, onSubmit, onChange}: FormModalProps) {
+export function FormModal({formFields, visible, onHide, onSubmit}: FormModalProps) {
   const cardParams = useCardParams();
+  const [values, setValues] = useState<Record<string, string>>({});
+
+  // Initialize or reset local form state when the modal becomes visible
+  useEffect(() => {
+    if (visible) {
+      setValues({
+        name: cardParams.name,
+        job: cardParams.job,
+        company: cardParams.company,
+        companyWebsite: cardParams.companyWebsite,
+        phone: cardParams.phone,
+        email: cardParams.email,
+        linkedin: cardParams.linkedin,
+      });
+    }
+  }, [visible, cardParams.name, cardParams.job, cardParams.company, cardParams.companyWebsite, cardParams.phone, cardParams.email, cardParams.linkedin]);
 
   return (
     <Sidebar visible={visible} onHide={onHide} fullScreen>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={(e) => { e.preventDefault(); onSubmit(values); }}>
         <div className="grid grid-cols-2 gap-2">
           {formFields.map((field) => (
             <React.Fragment key={field.name}>
@@ -27,9 +42,9 @@ export function FormModal({formFields, visible, onHide, onSubmit, onChange}: For
                 type={field.type || 'text'}
                 name={field.name}
                 id={field.name}
-                value={cardParams[field.name as keyof typeof cardParams]}
+                value={values[field.name] ?? ''}
                 placeholder={field.placeholder}
-                onChange={(e) => onChange(e, field.name)}
+                onChange={(e) => setValues(v => ({...v, [field.name]: e.target.value}))}
               />
             </React.Fragment>
           ))}

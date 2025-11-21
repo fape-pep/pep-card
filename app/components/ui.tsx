@@ -35,7 +35,6 @@ export default function Ui() {
     modalVisible,
     setModalVisible,
     handleSubmit,
-    handleChange,
     copyToClipboard,
     handleInfoClick,
   } = useUiActions();
@@ -49,7 +48,6 @@ export default function Ui() {
           visible={modalVisible}
           onHide={() => setModalVisible(false)}
           onSubmit={handleSubmit}
-          onChange={handleChange}
         />
       </div>
 
