@@ -1,6 +1,6 @@
 import {Canvas} from "@react-three/fiber"
 import {ContactShadows, OrbitControls} from "@react-three/drei"
-import PepCard from "~/components/pep-card";
+import PepCard from "~/components/pepCard";
 import Model from "~/components/model";
 import Ui from "~/components/ui";
 
