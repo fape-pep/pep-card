@@ -1,22 +1,25 @@
-FROM node:20-alpine AS development-dependencies-env
-COPY . /app
+## Multi-stage Dockerfile to build the React Router app and serve via Nginx
+
+# 1) Builder: install deps and build
+FROM node:20-alpine AS builder
 WORKDIR /app
+
+# Only copy manifests first for better layer caching
+COPY package.json package-lock.json ./
 RUN npm ci
 
-FROM node:20-alpine AS production-dependencies-env
-COPY ./package.json package-lock.json /app/
-WORKDIR /app
-RUN npm ci --omit=dev
-
-FROM node:20-alpine AS build-env
-COPY . /app/
-COPY --from=development-dependencies-env /app/node_modules /app/node_modules
-WORKDIR /app
+# Copy the rest of the source and build
+COPY . .
 RUN npm run build
 
-FROM node:20-alpine
-COPY ./package.json package-lock.json /app/
-COPY --from=production-dependencies-env /app/node_modules /app/node_modules
-COPY --from=build-env /app/build /app/build
-WORKDIR /app
-CMD ["npm", "run", "start"]
+# 2) Runtime: Nginx serving the static client build
+FROM nginx:alpine
+
+# Custom nginx config with SPA fallback to /index.html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# React Router's client build output
+COPY --from=builder /app/build/client /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
