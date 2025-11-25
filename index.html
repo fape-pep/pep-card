@@ -7,10 +7,18 @@
 </head>
 
 <body>
+<script>
+    document.addEventListener("shadowDOMReady", (event) => {
+        const root = event.detail.shadowRoot;
+        root.getElementById("iframe").src = "https://door3.test.pep-digital.de/" + (window.location.search ? window.location.search : '?name=Santa+Clause&job=Weihnachtsmann&company=pep.digital&companyWebsite=www.pep-digital.de&phone=123456789&email=mail%40santa.clause&linkedin=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fsanta-clause-5b4776297%2F');
+        console.log("EVENT");
+    });
+</script>
 <iframe
-    src="https://door3.test.pep-digital.de/?name=Santa+Clause&job=Weihnachtsmann&company=pep.digital&companyWebsite=www.pep-digital.de&phone=123456789&email=mail%40santa.clause&linkedin=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fsanta-clause-5b4776297%2F"
+    id="iframe"
+    src="https://door3.test.pep-digital.de/"
     width="100%"
-    height="800"
+    height="100%"
     style="border:0;"
     allow="clipboard-write; clipboard-read"
     allowfullscreen
