@@ -20,7 +20,7 @@ export function useUiActions() {
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText(document.referrer + window.location.search);
     } catch (error) {
       console.error('Failed to copy to clipboard:', error);
     }
