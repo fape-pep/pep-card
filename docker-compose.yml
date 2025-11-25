@@ -17,7 +17,7 @@ services:
       - "traefik.http.routers.door3-secure.tls=true"
       - "traefik.http.routers.door3-secure.tls.certresolver=http"
       - "traefik.http.routers.door3-secure.service=door3"
-      - "traefik.http.services.door3.loadbalancer.server.port=8000"
+      - "traefik.http.services.door3.loadbalancer.server.port=80"
       - "traefik.docker.network=proxy"
 networks:
   proxy:
