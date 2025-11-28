@@ -20,7 +20,7 @@ export function useUiActions() {
 
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText((document.referrer ? 'https://advent.pep-digital.de/2025/door/3/' : document.location + '/') +  window.location.search);
+      await navigator.clipboard.writeText((document.referrer ? 'https://advent.pep-digital.de/2025/3/' : document.location + '/') +  window.location.search);
     } catch (error) {
       console.error('Failed to copy to clipboard:', error);
     }
